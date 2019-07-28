@@ -9,8 +9,8 @@ include Fox
 require 'FileUtils'
 require 'active_support/time'
 
-require './src/global.rb'
-require './src/ui.rb'
+require './src/global/global.rb'
+require './src/ui/ui.rb'
 
 class AppWindow < FXMainWindow
   def initialize(app, title, w, h)
@@ -32,22 +32,21 @@ class AppWindow < FXMainWindow
     opts = { :opts => SPLITTER_HORIZONTAL|LAYOUT_FILL_X|LAYOUT_FILL_Y }
     @horizontal_splitter = FXSplitter.new(self, opts) { |k| k.barSize = 0; k.create }
     # Initialize navigation frame
-    opts = { :opts => LAYOUT_FIX_WIDTH|LAYOUT_FILL_Y, :width => 200 }
-    $navigation_frame = FXPacker.new(@horizontal_splitter, opts) { |k| k.backColor = clr("#081753"); k.create }
+    opts = { :opts => LAYOUT_FIX_WIDTH|LAYOUT_FILL_Y, :width => 200, :padding => 0 }
+    $form_frame = FXPacker.new(@horizontal_splitter, opts) { |k| k.backColor = clr("#081753"); k.create }
     # Initialize vertical splitter
-    opts = { :opts => SPLITTER_VERTICAL|LAYOUT_FILL_X|LAYOUT_FILL_Y, :width => self.width - (430) }
+    opts = { :opts => SPLITTER_VERTICAL|LAYOUT_FILL_X|LAYOUT_FILL_Y }
     @vertical_splitter = FXSplitter.new(@horizontal_splitter, opts) { |k| k.barSize = 0; k.create }
-    # Initialize inspect frame
-    opts = { :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y }
-    $inspect_frame = FXPacker.new(@horizontal_splitter, opts) { |k| k.backColor = clr("#FFFFFF"); k.create }
     # Initialize search frame
     opts = { :opts => LAYOUT_FILL_X|LAYOUT_FIX_HEIGHT, :height => 64 }
-    $search_frame = FXPacker.new(@vertical_splitter, opts) { |k| k.backColor = clr("#FFFFFF"); k.create }   
+    $search_frame = FXPacker.new(@vertical_splitter, opts) { |k| k.backColor = clr("#FFEEFF"); k.create }   
     # Initialize view frame
     opts = { :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y }
-    $view_frame = FXPacker.new(@vertical_splitter, opts) { |k| k.backColor = clr("#FFFFFF"); k.create }
+    $content_frame = FXPacker.new(@vertical_splitter, opts) { |k| k.backColor = clr("#FFFFFF"); k.create }
     # Set runtime true
     @runtime = true
+    # Add form
+    @form = Form.new($form_frame)
   end
 
   def on_resize(sender, sel, event)
