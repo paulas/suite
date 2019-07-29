@@ -33,20 +33,21 @@ class AppWindow < FXMainWindow
     @horizontal_splitter = FXSplitter.new(self, opts) { |k| k.barSize = 0; k.create }
     # Initialize navigation frame
     opts = { :opts => LAYOUT_FIX_WIDTH|LAYOUT_FILL_Y, :width => 200, :padding => 0 }
-    $form_frame = FXPacker.new(@horizontal_splitter, opts) { |k| k.backColor = clr("#081753"); k.create }
+    $form_frame = FXPacker.new(@horizontal_splitter, opts) { |k| k.backColor = clr("#272A34"); k.create }
     # Initialize vertical splitter
     opts = { :opts => SPLITTER_VERTICAL|LAYOUT_FILL_X|LAYOUT_FILL_Y }
     @vertical_splitter = FXSplitter.new(@horizontal_splitter, opts) { |k| k.barSize = 0; k.create }
     # Initialize search frame
-    opts = { :opts => LAYOUT_FILL_X|LAYOUT_FIX_HEIGHT, :height => 64 }
-    $search_frame = FXPacker.new(@vertical_splitter, opts) { |k| k.backColor = clr("#FFEEFF"); k.create }   
+    opts = { :opts => LAYOUT_FILL_X|LAYOUT_FIX_HEIGHT, :height => 48, :padding => 0 }
+    $search_frame = FXPacker.new(@vertical_splitter, opts) { |k| k.backColor = clr("#FFFFFF"); k.create }   
     # Initialize view frame
     opts = { :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y }
-    $content_frame = FXPacker.new(@vertical_splitter, opts) { |k| k.backColor = clr("#FFFFFF"); k.create }
+    $content_frame = FXPacker.new(@vertical_splitter, opts) { |k| k.backColor = clr("#EFEFEF"); k.create }
     # Set runtime true
     @runtime = true
     # Add form
     @form = Form.new($form_frame)
+    @search = Search.new($search_frame)
   end
 
   def on_resize(sender, sel, event)
@@ -61,10 +62,10 @@ class AppWindow < FXMainWindow
 end
 
 def run_app
-  app = FXApp.new
-  window = AppWindow.new(app, "", 900, 640)
-  app.create
-  app.run
+  $app = FXApp.new
+  window = AppWindow.new($app, "", 900, 640)
+  $app.create
+  $app.run
 end
 
 run_app
