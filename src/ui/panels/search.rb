@@ -2,13 +2,22 @@ class Search
   def initialize(parent)
     tabs = []
     @parent = parent
-    @wrapper = Box.new(parent, { :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y|LAYOUT_SIDE_LEFT, :padding => 0, :hSpacing => 0, :padLeft => 32 })
+    @wrapper = Box.new(parent, { :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y|LAYOUT_SIDE_LEFT, :padding => 0, :hSpacing => 0, :padLeft => 32, :padRight => 32 })
     @wrapper.object.backColor = parent.backColor
     ["Dashboard", "Products", "Warehouse", "Orders", "Report"].each do |k|
       tab = PageTab.new(@wrapper.object, k)
       tab.label.object.connect(SEL_LEFTBUTTONPRESS) { tabs.each { |k| k.set_state(tab == k) } }
       tabs << tab
     end
+    UserTab.new(@wrapper.object)
+  end
+end
+
+class UserTab
+  def initialize(parent)
+    @parent = parent
+    @wrapper = Box.new(parent, { :opts => LAYOUT_FILL_Y|LAYOUT_SIDE_RIGHT, :padding => 0})
+    @label = Text.new(@wrapper.object, Etc.getlogin, { :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y|JUSTIFY_CENTER_Y, :padBottom => 4, :padLeft => 16, :padRight => 16 })
   end
 end
 

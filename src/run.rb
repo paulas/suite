@@ -8,6 +8,8 @@ include Fox
 
 require 'FileUtils'
 require 'active_support/time'
+require 'json'
+require 'csv'
 
 require './src/global/global.rb'
 require './src/ui/ui.rb'
@@ -48,6 +50,7 @@ class AppWindow < FXMainWindow
     # Add form
     @form = Form.new($form_frame)
     @search = Search.new($search_frame)
+    @content = Content.new($content_frame, "./data/live/page_test.json")
   end
 
   def on_resize(sender, sel, event)
@@ -63,7 +66,7 @@ end
 
 def run_app
   $app = FXApp.new
-  window = AppWindow.new($app, "", 900, 640)
+  window = AppWindow.new($app, "", 960, 560)
   $app.create
   $app.run
 end

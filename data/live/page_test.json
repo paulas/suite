@@ -1,0 +1,12 @@
+{
+    "id": "page_test",
+    "archetype": "page",
+    "objects": [
+        {
+            "list": {
+                "path": "./data/live",
+                "archetype": "page"
+            }
+        }
+    ]
+}

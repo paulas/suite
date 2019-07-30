@@ -45,9 +45,7 @@ class Form
 
   def get_values()
     values = []
-    @fields.each do |key, field|
-      values << [key, field.object.text]
-    end
+    @fields.each { |key, field| values << [key, field.object.text] }
     return values
   end
 end
