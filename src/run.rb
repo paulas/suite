@@ -50,7 +50,7 @@ class AppWindow < FXMainWindow
     # Add form
     @form = Form.new($form_frame)
     @search = Search.new($search_frame)
-    @content = Content.new($content_frame, "./data/live/page_test.json")
+    $content = Content.new($content_frame, "./data/live/page_test.json")
   end
 
   def on_resize(sender, sel, event)

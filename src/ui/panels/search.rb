@@ -6,7 +6,7 @@ class Search
     @wrapper.object.backColor = parent.backColor
     ["Dashboard", "Products", "Warehouse", "Orders", "Report"].each do |k|
       tab = PageTab.new(@wrapper.object, k)
-      tab.label.object.connect(SEL_LEFTBUTTONPRESS) { tabs.each { |k| k.set_state(tab == k) } }
+      tab.label.object.connect(SEL_LEFTBUTTONPRESS) { tabs.each { |k| $content.load_path("./data/live/page_test_2.json"); k.set_state(tab == k) } }
       tabs << tab
     end
     UserTab.new(@wrapper.object)

@@ -24,14 +24,22 @@ class List
       csv.each do |line|
         line_no += 1
         text = Text.new(@columns.first.object, " ", { :opts => LAYOUT_FILL_X, :padding => 8 })
-        text.object.backColor = clr(line_no % 2 == 1 ? "#FFFFFF" : "#FFFFFF")
+        text.object.backColor = clr("#FFFFFF")
         line.each_with_index do |cell, index|
-          opts = line_no == 0 ? { :opts => JUSTIFY_LEFT|LAYOUT_FILL_X, :padding => 8 } : { :opts => JUSTIFY_LEFT|LAYOUT_FILL_X, :padding => 8 }
-          text = Text.new(@columns[index + 1].object, cell, opts)
-          text.object.backColor = clr(line_no % 2 == 1 ? "#FFFFFF" : "#FFFFFF")
+          unless (index == 0) && (line_no > 0)
+            opts = line_no == 0 ? { :opts => JUSTIFY_LEFT|LAYOUT_FILL_X, :padding => 8 } : { :opts => JUSTIFY_LEFT|LAYOUT_FILL_X, :padding => 8 }
+            text = Text.new(@columns[index + 1].object, cell, opts)
+            text.object.backColor = clr("#FFFFFF")
+          else
+            icon = get_barcode(cell)
+            puts icon
+            opts = { :opts => ICON_BEFORE_TEXT|JUSTIFY_LEFT|LAYOUT_FILL_X, :padding => 8 }
+            text = Text.new(@columns[index + 1].object, " ", opts, icon)
+            text.object.backColor = clr("#FFFFFF")
+          end
         end
         text = Text.new(@columns.last.object, " ", { :opts => LAYOUT_FILL_X, :padding => 8 })
-        text.object.backColor = clr(line_no % 2 == 1 ? "#FFFFFF" : "#FFFFFF")
+        text.object.backColor = clr("#FFFFFF")
       end
     end
   end

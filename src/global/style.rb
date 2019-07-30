@@ -8,3 +8,20 @@ def get_icon(filename)
 	  return FXPNGIcon.new($app, f.read)
 	}
 end
+
+def get_barcode(data)
+  `./src/zint/zint.exe --notext --scale=0.5 --height=12 --output=cfg/barcodes/#{data}.png --data=#{data}`
+  if File.exists?("./cfg/barcodes/#{data}.png")
+    File.open(File.join("cfg/barcodes", "#{data}.png"), "rb") { |f|
+      return FXPNGIcon.new($app, f.read)
+    }
+  else
+    until File.exists?("./cfg/barcodes/#{data}.png")
+      get_barcode(data)
+    end    
+  end
+end
+
+def remove_children(parent)
+	parent.each_child { |c| parent.removeChild(c) }
+end
