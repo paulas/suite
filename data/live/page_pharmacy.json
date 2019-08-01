@@ -1,0 +1,9 @@
+{
+    "id": "page_pharmacy",
+    "archetype": "page",
+    "objects": [
+        {
+            "caremeds_pharmacy": {}
+        }
+    ]
+}

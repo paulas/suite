@@ -6,6 +6,7 @@ class Content
   end
   
   def load_path(path)
+    $form.clear
     remove_children(@wrapper.object)
     data = JSON.load File.open path
     data["objects"].each do |object|
@@ -13,6 +14,8 @@ class Content
         case type
         when "list"; List.new(@wrapper.object, parameters["path"])
         when "yuyama_manual"; YuyamaManual.new(@wrapper.object, parameters["prescription"])
+        when "yuyama_canister_list"; YuyamaCanisterList.new(@wrapper.object)
+        when "caremeds_pharmacy"; CareMedsPharmacy.new(@wrapper.object)
         end
       end
     end

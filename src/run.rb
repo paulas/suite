@@ -10,6 +10,7 @@ require 'FileUtils'
 require 'active_support/time'
 require 'json'
 require 'csv'
+require 'Faraday'
 
 require './src/global/global.rb'
 require './src/ui/ui.rb'
@@ -35,7 +36,7 @@ class AppWindow < FXMainWindow
     opts = { :opts => SPLITTER_HORIZONTAL|LAYOUT_FILL_X|LAYOUT_FILL_Y }
     @horizontal_splitter = FXSplitter.new(self, opts) { |k| k.barSize = 0; k.create }
     # Initialize navigation frame
-    opts = { :opts => LAYOUT_FIX_WIDTH|LAYOUT_FILL_Y, :width => 200, :padding => 0 }
+    opts = { :opts => LAYOUT_FIX_WIDTH|LAYOUT_FILL_Y, :width => 0, :padding => 0 }
     $form_frame = FXPacker.new(@horizontal_splitter, opts) { |k| k.backColor = clr("#272A34"); k.create }
     # Initialize vertical splitter
     opts = { :opts => SPLITTER_VERTICAL|LAYOUT_FILL_X|LAYOUT_FILL_Y }
@@ -49,9 +50,9 @@ class AppWindow < FXMainWindow
     # Set runtime true
     $runtime = true
     # Add form
-    @form = Form.new($form_frame)
-    @search = Search.new($search_frame)
-    $content = Content.new($content_frame, "./data/live/page_manual.json")
+    $form = Form.new($form_frame)
+    $search = Search.new($search_frame)
+    $content = Content.new($content_frame, "./data/live/page_canister_list.json")
   end
 
   def on_resize(sender, sel, event)

@@ -1,0 +1,6 @@
+{
+    "Dashboard": "./data/live/page_pharmacy.json",
+    "Machine": "./data/live/page_canister_list.json",
+    "Canisters": "./data/live/page_canister_list.json",
+    "DTA Demo": "./data/live/page_manual.json"
+}

@@ -36,6 +36,10 @@ class List
       end
     end
   end
+
+  def add_button
+    return @buttons[0].object.object
+  end
 end
 
 class ListButton

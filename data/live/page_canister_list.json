@@ -1,0 +1,9 @@
+{
+    "id": "page_canister_list",
+    "archetype": "page",
+    "objects": [
+        {
+            "yuyama_canister_list": {}
+        }
+    ]
+}

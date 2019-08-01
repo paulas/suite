@@ -4,9 +4,10 @@ class Search
     @parent = parent
     @wrapper = Box.new(parent, { :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y|LAYOUT_SIDE_LEFT, :padding => 0, :hSpacing => 0, :padLeft => 32, :padRight => 32 })
     @wrapper.object.backColor = parent.backColor
-    ["Dashboard", "Products", "Warehouse", "Orders", "Report"].each do |k|
-      tab = PageTab.new(@wrapper.object, k)
-      tab.label.object.connect(SEL_LEFTBUTTONPRESS) { tabs.each { |k| $content.load_path("./data/live/page_test.json"); k.set_state(tab == k) } }
+    pages = JSON.load File.open "./cfg/navigation.json"
+    pages.each do |page, path|
+      tab = PageTab.new(@wrapper.object, page)
+      tab.label.object.connect(SEL_LEFTBUTTONPRESS) { tabs.each { |k| $content.load_path(path); k.set_state(tab == k) } }
       tabs << tab
     end
     UserTab.new(@wrapper.object)
