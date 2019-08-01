@@ -3,16 +3,9 @@
     "archetype": "page",
     "objects": [
         {
-            "list": {
-                "path": "./data/live",
-                "archetype": "page"
+            "manual": {
+                "prescription": null
             }
-        },
-        {
-            "list": {
-                "path": "./data/live",
-                "archetype": "page"
-            }
-        }
+        }=
     ]
 }

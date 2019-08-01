@@ -13,6 +13,7 @@ require 'csv'
 
 require './src/global/global.rb'
 require './src/ui/ui.rb'
+require './src/systems/systems.rb'
 
 class AppWindow < FXMainWindow
   def initialize(app, title, w, h)
@@ -28,7 +29,7 @@ class AppWindow < FXMainWindow
   end
   
   def create
-    @runtime = false
+    $runtime = false
     super; show(PLACEMENT_SCREEN)
     # Initialize horizontal splitter
     opts = { :opts => SPLITTER_HORIZONTAL|LAYOUT_FILL_X|LAYOUT_FILL_Y }
@@ -46,16 +47,16 @@ class AppWindow < FXMainWindow
     opts = { :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y }
     $content_frame = FXPacker.new(@vertical_splitter, opts) { |k| k.backColor = clr("#EFEFEF"); k.create }
     # Set runtime true
-    @runtime = true
+    $runtime = true
     # Add form
     @form = Form.new($form_frame)
     @search = Search.new($search_frame)
-    $content = Content.new($content_frame, "./data/live/page_test.json")
+    $content = Content.new($content_frame, "./data/live/page_manual.json")
   end
 
   def on_resize(sender, sel, event)
     # Resize vertical splitter
-    @vertical_splitter.width = self.width - 430 if @runtime
+    @vertical_splitter.width = self.width - 430 if $runtime
   end
 
   def on_close(sender, sel, event)

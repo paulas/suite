@@ -12,6 +12,7 @@ class Content
       object.each do |type, parameters|
         case type
         when "list"; List.new(@wrapper.object, parameters["path"])
+        when "yuyama_manual"; YuyamaManual.new(@wrapper.object, parameters["prescription"])
         end
       end
     end
