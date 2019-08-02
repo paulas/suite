@@ -1,3 +1,5 @@
 require "./src/systems/Yuyama/manual.rb"
 require "./src/systems/Yuyama/canister_list.rb"
+require "./src/systems/CareMeds/pharmacy_dashboard.rb"
+require "./src/systems/CareMeds/pharmacy_import_menu.rb"
 require "./src/systems/CareMeds/pharmacy.rb"

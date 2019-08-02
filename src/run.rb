@@ -19,7 +19,7 @@ require './src/systems/systems.rb'
 class AppWindow < FXMainWindow
   def initialize(app, title, w, h)
     # Create window properties
-    properties = { :width => w, :height => h }
+    properties = { :width => w, :height => h, :icon => app_icon(app), :miniIcon => app_favicon(app) }
     # Call window creation
     super(app, title, properties)
     # Capture resize event
@@ -45,8 +45,12 @@ class AppWindow < FXMainWindow
     opts = { :opts => LAYOUT_FILL_X|LAYOUT_FIX_HEIGHT, :height => 48, :padding => 0 }
     $search_frame = FXPacker.new(@vertical_splitter, opts) { |k| k.backColor = clr("#FFFFFF"); k.create }   
     # Initialize view frame
+    opts = { :opts => VSCROLLER_NEVER|HSCROLLER_NEVER|VSCROLLING_ON|SCROLLERS_DONT_TRACK|LAYOUT_FILL_X|LAYOUT_FILL_Y }
+    content_wrapper = FXScrollWindow.new(@vertical_splitter, opts)
+    content_wrapper.verticalScrollBar.line = 10
+    content_wrapper.create
     opts = { :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y }
-    $content_frame = FXPacker.new(@vertical_splitter, opts) { |k| k.backColor = clr("#EFEFEF"); k.create }
+    $content_frame = FXPacker.new(content_wrapper, opts) { |k| k.backColor = clr("#EFEFEF"); k.create }
     # Set runtime true
     $runtime = true
     # Add form

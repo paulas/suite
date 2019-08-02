@@ -4,9 +4,14 @@ class Content
     @wrapper = Box.new(parent, { :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y, :padding => 24, :vSpacing => 24 })
     load_path(path) unless path == nil
   end
+
+  def clear
+    remove_children(@wrapper.object)
+  end
   
   def load_path(path)
     $form.clear
+    clear
     remove_children(@wrapper.object)
     data = JSON.load File.open path
     data["objects"].each do |object|

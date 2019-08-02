@@ -14,21 +14,23 @@ class Form
     clear
     @parent.width = 200
     @wrapper = Box.new(@parent, { :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y, :padding => 16, :vSpacing => 2 })
-    hash[:fields].each do |key, value|
-      # Caption
-      text = Text.new(@wrapper.object, value[:caption])
-      text.object.textColor = clr("#FFFFFF")
-      # Input field
-      field = Field.new(@wrapper.object, value[:default], -1, (value.key?(:password) && value[:password] == true))
-      field.object.borderColor = clr("#454A52")
-      field.object.backColor = @parent.backColor
-      field.object.textColor = clr("#636975")
-      # Padding
+    if hash.key?(:fields)
+      hash[:fields].each do |key, value|
+        # Caption
+        text = Text.new(@wrapper.object, value[:caption])
+        text.object.textColor = clr("#FFFFFF")
+        # Input field
+        field = Field.new(@wrapper.object, value[:default], -1, (value.key?(:password) && value[:password] == true))
+        field.object.borderColor = clr("#454A52")
+        field.object.backColor = @parent.backColor
+        field.object.textColor = clr("#636975")
+        # Padding
+        Text.new(@wrapper.object, "")
+        # Assign
+        @fields << [key, field]
+      end
       Text.new(@wrapper.object, "")
-      # Assign
-      @fields << [key, field]
     end
-    Text.new(@wrapper.object, "")
     # Buttons
     buttons = []
     if hash[:buttons].length == 2
@@ -47,6 +49,17 @@ class Form
       buttons.last.object.borderColor = clr(hash[:buttons].to_a.last[1][:border_color]) if hash[:buttons].to_a.last[1].key?(:border_color)
       buttons.last.object.textColor = clr(hash[:buttons].to_a.last[1][:text_color]) if hash[:buttons].to_a.last[1].key?(:text_color)
       buttons.last.object.backColor = clr(hash[:buttons].to_a.last[1][:back_color]) if hash[:buttons].to_a.last[1].key?(:back_color)
+    else
+      hash[:buttons].each do |value, button|
+        opts = { :opts => LAYOUT_FILL_X, :padding => 6 }
+        opts[:opts] |= button.key?(:border_color) ? FRAME_LINE : FRAME_NONE
+        buttons << Button.new(@wrapper.object, button[:caption], opts)
+        buttons.last.object.borderColor = clr(button[:border_color]) if button.key?(:border_color)
+        buttons.last.object.textColor = clr(button[:text_color]) if button.key?(:text_color)
+        buttons.last.object.backColor = clr(button[:back_color]) if button.key?(:back_color)
+        buttons.last.object.userData = value
+        Text.new(@wrapper.object, "")
+      end
     end
     return buttons
   end
